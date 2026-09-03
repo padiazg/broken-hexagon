@@ -1,0 +1,23 @@
+# .hexago.yaml - HexaGo project configuration
+# Created by `hexago init`. Edit with care.
+
+structure:
+    adapter_style: primary-secondary
+    core_logic: services
+    explicit_ports: false
+project:
+    name: broken-hexagon
+    module: github.com/padiazg/broken-hexagon
+    type: service
+    framework: stdlib
+    database_driver: postgres
+    go_version: "1.21"
+    year: 2026
+features:
+    with_docker: false
+    with_observability: false
+    with_migrations: false
+    with_workers: false
+    with_metrics: false
+    with_example: false
+    with_tests: false

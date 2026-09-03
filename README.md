@@ -20,11 +20,12 @@ nobody enforces the dependency rule:
 |---|-------|-----------|:---------------------:|
 | 1 | `internal/core/domain/product.go:28` | The domain entity calls `redis.InvalidateProduct` directly — the domain reaches into a secondary adapter | ✅ |
 | 2 | `internal/core/services/products/products.go` | The service depends on the concrete `*database.ProductRepository` instead of the `ProductRepository` port in `internal/core/ports` | ✅ |
-| 3 | `internal/adapters/secondary/database/product_repository.go` | A secondary adapter imports `primary/http/dto` (a presentation type) — outbound adapter leaks into inbound | ⚠️ not yet |
-| 4 | same file | The repository talks to the `redis` adapter directly, with no port in between | ⚠️ not yet |
+| 3 | `internal/adapters/secondary/database/product_repository.go` | A secondary adapter imports `primary/http/dto` (a presentation type) — outbound adapter leaks into inbound | ⚠️ [known gap](https://github.com/padiazg/hexago/issues/59) |
+| 4 | same file | The repository talks to the `redis` adapter directly, with no port in between | ⚠️ [known gap](https://github.com/padiazg/hexago/issues/58) |
 
-The `⚠️` rows are planted on purpose too: they're a discussion point about
-what the validator does (and doesn't) check today.
+The `⚠️` rows are planted on purpose: adapter-to-adapter imports are currently
+not flagged because [`validateAdapterDependencies` is a no-op](https://github.com/padiazg/hexago/issues/58)
+— a discussion point about what the validator does (and doesn't) check today.
 
 ## Triggering the validation
 
